@@ -1,0 +1,26 @@
+/**
+ * File: stardust-theme-dark.scss
+ * Project: Stardust
+ * Author: Jonathan Gregson <jonathan@jdgregson.com>
+ */
+
+$SDprimaryFont: 'Roboto', sans-serif;
+$SDsecondaryFont: 'Roboto Light', sans-serif;
+$SDprimaryColor: #253238;
+$SDsecondaryColor: #233a44;
+$SDtertiaryColor: #27414c;
+$SDactionColor: #00adc1;
+$SDactionTextColor: #00adc1;
+$SDtitleTextColor: #cccccc;
+$SDinvertedActionTextColor: #ffffff;
+$SDoutlineColor: #555555;
+$SDlinkColor: #00adc1;
+$SDlinkColorVisited: #32626b;
+$SDtextColor: #8c8a8a;
+$SDplaceholderTextColor: #505252;
+$SDwarningColor: #B3BC20;
+$SDerrorColor: #BC1339;
+$SDwarningBackground: #ffcbcb;
+$SDwarningBorder: #ff0000;
+
+@import "stardust";

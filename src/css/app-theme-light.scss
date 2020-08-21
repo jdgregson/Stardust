@@ -1,0 +1,24 @@
+/* Define app variables here */
+$helloText: #cccccc;
+
+/* Re-define Startdust variables here */
+$SDprimaryFont: 'Roboto', sans-serif;
+$SDsecondaryFont: 'Roboto Light', sans-serif;
+$SDprimaryColor: #ffffff;
+$SDsecondaryColor: #efefef;
+$SDtertiaryColor: #fefefe;
+$SDactionColor: #3434f9;
+$SDactionTextColor: #3434f9;
+$SDtitleTextColor: #555555;
+$SDinvertedActionTextColor: #ffffff;
+$SDoutlineColor: #dddddd;
+$SDlinkColor: #3434f9;
+$SDlinkColorVisited: #3434f9;
+$SDtextColor: #505252;
+$SDplaceholderTextColor: #888888;
+$SDwarningColor: #B3BC20;
+$SDerrorColor: #BC1339;
+$SDwarningBackground: #ffcbcb;
+$SDwarningBorder: #ff0000;
+
+@import "app";
