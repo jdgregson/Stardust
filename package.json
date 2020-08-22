@@ -1,11 +1,21 @@
 {
   "name": "Stardust",
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
-    "@babel/plugin-transform-object-assign": "^7.10.4",
-    "@babel/preset-env": "^7.8.3",
-    "babel-preset-minify": "^0.5.1",
-    "node-sass": "^4.14.1"
+    "node-sass": "^4.14.1",
+    "gts": "^2.0.2",
+    "typescript": "^3.8.3",
+    "@types/node": "^13.11.1"
+  },
+  "dependencies": {
+    "gts": "^2.0.2"
+  },
+  "scripts": {
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm.cmd run compile",
+    "pretest": "npm.cmd run compile",
+    "posttest": "npm.cmd run check"
   }
 }
