@@ -26,12 +26,15 @@ const showToast = (message, timeout = 3000, enableHTML = false) => {
   }
   toastWrap.appendChild(toast);
   document.body.appendChild(toastWrap);
+
   self.setTimeout(() => {
     toastWrap.style.opacity = 1;
   }, 50);
+
   self.setTimeout(() => {
     toastWrap.style.opacity = 0;
   }, timeout + 500);
+
   self.setTimeout(() => {
     document.body.removeChild(toastWrap);
   }, timeout + 2500);
