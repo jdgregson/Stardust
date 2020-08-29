@@ -4,14 +4,13 @@
  * Author: Jonathan Gregson <jonathan@jdgregson.com>
  */
 
-
 /** interfaces **/
 
 interface StardustOptions {
   isFirstLoad: boolean;
   theme: string;
   [key: string]: any;
-};
+}
 
 interface Stardust {
   options?: any;
@@ -20,8 +19,7 @@ interface Stardust {
   themes: Array<string>;
   selectedTheme: string;
   sideMenuIsVisible: boolean;
-};
-
+}
 
 /** toast **/
 
@@ -92,7 +90,7 @@ const showTipOrb = (x: string | number, y: string | number) => {
  * Resets the loading bar so that it is ready to be shown again.
  */
 const resetLoadingBar = () => {
-  const loadingBar = <HTMLDivElement>document.getElementById('loading-bar');
+  const loadingBar = document.getElementById('loading-bar') as HTMLDivElement;
   if (loadingBar) {
     loadingBar.style.display = 'none';
     loadingBar.style.left = '-100%';
@@ -108,7 +106,7 @@ const resetLoadingBar = () => {
  *     loading bar to.
  */
 const updateLoadingBar = (percent: number) => {
-  const loadingBar = <HTMLDivElement>document.getElementById('loading-bar');
+  const loadingBar = document.getElementById('loading-bar') as HTMLDivElement;
   if (loadingBar) {
     if (percent > 100) {
       throw 'Cannot exceed 100%';
@@ -158,10 +156,10 @@ const rebindSelectObjects = () => {
  * @return {object} The options object.
  */
 const getOptions = () => {
-  let options = <StardustOptions>{
+  let options = {
     isFirstLoad: true,
-    theme: 'light'
-  };
+    theme: 'light',
+  } as StardustOptions;
   if (typeof localStorage !== 'undefined') {
     let savedOptions = localStorage.getItem('options');
     if (savedOptions) {
@@ -208,7 +206,7 @@ const resetOptions = (reload = true) => {
 const bindOptions = (stringToBoolean = true) => {
   const optionItems = document.querySelectorAll('[bindOption]');
   for (let i = 0; i < optionItems.length; i++) {
-    const optionItem = <HTMLElement>optionItems[i];
+    const optionItem = optionItems[i] as HTMLElement;
     const isCheckbox = optionItem.getAttribute('type') === 'checkbox';
     const isSelect = optionItem.tagName.toLowerCase() === 'select';
     const isInput = optionItem.tagName.toLowerCase() === 'input';
@@ -217,9 +215,9 @@ const bindOptions = (stringToBoolean = true) => {
     optionItem.addEventListener('change', (e: Event) => {
       if (e.target) {
         if (isCheckbox) {
-          stardust.options[boundOption] = (<HTMLInputElement>(e.target)).checked ? true : false;
+          stardust.options[boundOption] = (e.target as HTMLInputElement).checked ? true : false;
         } else if (isSelect) {
-          const target = <HTMLSelectElement>e.target;
+          const target = e.target as HTMLSelectElement;
           if (target.value === 'true' && stringToBoolean) {
             stardust.options[boundOption] = true;
           } else if (target.value === 'false' && stringToBoolean) {
@@ -228,7 +226,7 @@ const bindOptions = (stringToBoolean = true) => {
             stardust.options[boundOption] = target.value;
           }
         } else if (isInput) {
-          const target = <HTMLInputElement>e.target;
+          const target = e.target as HTMLInputElement;
           stardust.options[boundOption] = target.value;
         }
       }
@@ -237,12 +235,12 @@ const bindOptions = (stringToBoolean = true) => {
 
     const value = stardust.options[boundOption];
     if (isSelect) {
-      (<HTMLSelectElement>optionItem).value = value;
+      (optionItem as HTMLSelectElement).value = value;
     } else if (isCheckbox) {
       if (value === true || value === 'true') {
-        (<HTMLInputElement>optionItem).checked = true;
+        (optionItem as HTMLInputElement).checked = true;
       } else {
-        (<HTMLInputElement>optionItem).checked = false;
+        (optionItem as HTMLInputElement).checked = false;
       }
     }
   }
@@ -277,7 +275,7 @@ const bindActions = () => {
  */
 const hideSideMenu = (e: Event) => {
   if (e.target) {
-    let target = <HTMLElement>e.target;
+    let target = e.target as HTMLElement;
     if (
       target.id !== 'side-menu-button-svg' &&
       target.id !== 'side-menu-button-svg' &&
@@ -301,9 +299,9 @@ const hideSideMenu = (e: Event) => {
  * @param {boolean} hide Whether or not to override the toggling behavior.
  */
 const toggleSideMenu = (hide = false) => {
-  const sideMenu = <HTMLDivElement>document.getElementById('side-menu-wrap');
-  const headerBack = <HTMLDivElement>document.getElementById('header-back-wrap');
-  const headerTitle = <HTMLDivElement>document.getElementById('header-title');
+  const sideMenu = document.getElementById('side-menu-wrap') as HTMLDivElement;
+  const headerBack = document.getElementById('header-back-wrap') as HTMLDivElement;
+  const headerTitle = document.getElementById('header-title') as HTMLDivElement;
   if (sideMenu && headerBack && headerTitle) {
     const state = sideMenu.style.marginRight;
     headerTitle.classList.add('resizing');
@@ -311,7 +309,7 @@ const toggleSideMenu = (hide = false) => {
       headerTitle.classList.remove('resizing');
     }, 100);
     sideMenu.style.right = '0';
-    if ((state && (state == '0' || state === '0px')) || hide) {
+    if ((state && (state === '0' || state === '0px')) || hide) {
       sideMenu.style.marginRight = '-450px';
       stardust.sideMenuIsVisible = false;
       headerBack.style.marginLeft = '-40px';
@@ -439,7 +437,7 @@ const getThemePrimaryColor = () => {
  * Hides and then removes the splash screen if present.
  */
 const hideSplash = () => {
-  const splash = <HTMLDivElement>document.getElementById('splash-wrap');
+  const splash = document.getElementById('splash-wrap') as HTMLDivElement;
   if (splash) {
     splash.style.opacity = '0';
     self.setTimeout(() => {
@@ -493,7 +491,7 @@ const addModal = (modalName: string, modalContent: string, modalTitle = '') => {
  * @param {string} modalName The name of the modal popup to show.
  */
 const showModal = (modalName: string) => {
-  const modal = <HTMLDivElement>document.querySelector(`#${modalName}-wrap`);
+  const modal = document.querySelector(`#${modalName}-wrap`) as HTMLDivElement;
   if (modal) {
     modal.style.display = 'block';
   }
@@ -506,7 +504,7 @@ const showModal = (modalName: string) => {
  * @param {string} modalName The name of the modal popup hide.
  */
 const hideModal = (modalName: string) => {
-  const modal = <HTMLDivElement>document.querySelector(`#${modalName}-wrap`);
+  const modal = document.querySelector(`#${modalName}-wrap`) as HTMLDivElement;
   if (modal) {
     modal.style.display = 'none';
   }
@@ -520,7 +518,7 @@ const hideModal = (modalName: string) => {
  */
 const hideModalByEvent = (e: Event) => {
   if (e.target) {
-    const target = <HTMLElement>e.target;
+    const target = e.target as HTMLElement;
     const classList = target.classList;
     if (
       classList &&
@@ -529,7 +527,7 @@ const hideModalByEvent = (e: Event) => {
     ) {
       const modals = document.getElementsByClassName('modal-wrap');
       for (let i = 0; i < modals.length; i++) {
-        const modal = <HTMLDivElement>modals[i];
+        const modal = modals[i] as HTMLDivElement;
         modal.style.display = 'none';
       }
     }
@@ -558,7 +556,7 @@ const getUrlParameter = (name: string) => {
 /**
  * Bootstraps the Stardust application.
  */
-const initStardust = (initOptions: Stardust) => {
+const initStardust = (initOptions: any) => {
   stardust = {
     options: {},
     actions: {
@@ -595,7 +593,7 @@ const initStardust = (initOptions: Stardust) => {
   stardust.options = getOptions();
   applyStardustTheme(stardust.options.theme);
 
-  const sideMenuButton = <HTMLDivElement>document.getElementById('side-menu-button-wrap');
+  const sideMenuButton = document.getElementById('side-menu-button-wrap') as HTMLDivElement;
   if (sideMenuButton) {
     sideMenuButton.addEventListener('click', () => {
       toggleSideMenu();
