@@ -4,6 +4,22 @@
  * Author: Jonathan Gregson <jonathan@jdgregson.com>
  */
 
+/** interfaces **/
+
+interface StardustOptions {
+  isFirstLoad: boolean;
+  theme: string;
+  [key: string]: any;
+}
+
+interface Stardust {
+  options?: any;
+  appDefaultOptions?: any;
+  actions: any;
+  themes: Array<string>;
+  selectedTheme: string;
+  sideMenuIsVisible: boolean;
+}
 
 /** toast **/
 
@@ -14,7 +30,7 @@
  * @param {boolean=} enableHTML Whether or not to permit HTML in the output.
  *     Default: false.
  */
-const showToast = (message, timeout = 3000, enableHTML = false) => {
+const showToast = (message: string, timeout = 3000, enableHTML = false) => {
   const toast = document.createElement('div');
   const toastWrap = document.createElement('div');
   toast.setAttribute('class', 'toast');
@@ -28,18 +44,17 @@ const showToast = (message, timeout = 3000, enableHTML = false) => {
   document.body.appendChild(toastWrap);
 
   self.setTimeout(() => {
-    toastWrap.style.opacity = 1;
+    toastWrap.style.opacity = '1';
   }, 50);
 
   self.setTimeout(() => {
-    toastWrap.style.opacity = 0;
+    toastWrap.style.opacity = '0';
   }, timeout + 500);
 
   self.setTimeout(() => {
     document.body.removeChild(toastWrap);
   }, timeout + 2500);
 };
-
 
 /** tip orb */
 
@@ -49,7 +64,7 @@ const showToast = (message, timeout = 3000, enableHTML = false) => {
  * @param {number} x The X coordinate that the orb should originate from.
  * @param {number} y The Y coordinate that the orb should originate from.
  */
-const showTipOrb = (x, y) => {
+const showTipOrb = (x: string | number, y: string | number) => {
   const orb = document.createElement('div');
   orb.classList.add('tooltip-orb');
   orb.style.top = `${y}px`;
@@ -69,19 +84,20 @@ const showTipOrb = (x, y) => {
   }, 1000);
 };
 
-
 /** loading bar **/
 
 /**
  * Resets the loading bar so that it is ready to be shown again.
  */
 const resetLoadingBar = () => {
-  const loadingBar = document.getElementById('loading-bar');
-  loadingBar.style.display = 'none';
-  loadingBar.style.left = '-100%';
-  self.setTimeout(() => {
-    loadingBar.style.display = 'block';
-  }, 100);
+  const loadingBar = document.getElementById('loading-bar') as HTMLDivElement;
+  if (loadingBar) {
+    loadingBar.style.display = 'none';
+    loadingBar.style.left = '-100%';
+    self.setTimeout(() => {
+      loadingBar.style.display = 'block';
+    }, 100);
+  }
 };
 
 /**
@@ -89,23 +105,24 @@ const resetLoadingBar = () => {
  * @param {number} percent Integer representing the percentage to set the
  *     loading bar to.
  */
-const updateLoadingBar = (percent) => {
-  const loadingBar = document.getElementById('loading-bar');
-  if (percent > 100) {
-    throw 'Cannot exceed 100%';
-  } else if (percent === 100) {
-    loadingBar.style.left = '0';
-    self.setTimeout(() => {
-      loadingBar.style.left = '100%';
-    }, 100);
-    self.setTimeout(() => {
-      resetLoadingBar();
-    }, 200);
-  } else {
-    loadingBar.style.left = `-${(100) - (percent)}%`;
+const updateLoadingBar = (percent: number) => {
+  const loadingBar = document.getElementById('loading-bar') as HTMLDivElement;
+  if (loadingBar) {
+    if (percent > 100) {
+      throw 'Cannot exceed 100%';
+    } else if (percent === 100) {
+      loadingBar.style.left = '0';
+      self.setTimeout(() => {
+        loadingBar.style.left = '100%';
+      }, 100);
+      self.setTimeout(() => {
+        resetLoadingBar();
+      }, 200);
+    } else {
+      loadingBar.style.left = `-${100 - percent}%`;
+    }
   }
 };
-
 
 /** DOM overrides **/
 
@@ -131,7 +148,6 @@ const rebindSelectObjects = () => {
   }
 };
 
-
 /** options and actions **/
 
 /**
@@ -140,25 +156,23 @@ const rebindSelectObjects = () => {
  * @return {object} The options object.
  */
 const getOptions = () => {
+  let options = {
+    isFirstLoad: true,
+    theme: 'light',
+  } as StardustOptions;
   if (typeof localStorage !== 'undefined') {
-    let options = localStorage.getItem('options');
-    if (options) {
-      options = JSON.parse(options);
+    let savedOptions = localStorage.getItem('options');
+    if (savedOptions) {
+      options = <StardustOptions>JSON.parse(savedOptions);
       options.isFirstLoad = false;
-    } else {
-      options = {};
-      options.isFirstLoad = true;
-      options.theme = 'light';
     }
-    if (typeof window.appDefaultOptions !== 'undefined') {
-      let appOptions = window.appDefaultOptions;
-      Object.assign(appOptions, options);
-      options = appOptions;
+    if (typeof stardust.appDefaultOptions !== 'undefined') {
+      options = {...stardust.appDefaultOptions, ...options};
     }
     return options;
   } else {
-    console.warn('Local storage is not available, options will not work.');
-    return {};
+    console.warn('Local storage is not available, returning default options.');
+    return options;
   }
 };
 
@@ -167,7 +181,7 @@ const getOptions = () => {
  */
 const saveOptions = () => {
   if (typeof localStorage !== 'undefined') {
-    localStorage.setItem('options', JSON.stringify(options));
+    localStorage.setItem('options', JSON.stringify(stardust.options));
   }
 };
 
@@ -179,7 +193,7 @@ const saveOptions = () => {
  */
 const resetOptions = (reload = true) => {
   localStorage.removeItem('options');
-  window.options = getOptions();
+  stardust.options = getOptions();
   if (reload) {
     document.location.reload();
   }
@@ -192,33 +206,41 @@ const resetOptions = (reload = true) => {
 const bindOptions = (stringToBoolean = true) => {
   const optionItems = document.querySelectorAll('[bindOption]');
   for (let i = 0; i < optionItems.length; i++) {
-    const optionItem = optionItems[i];
+    const optionItem = optionItems[i] as HTMLElement;
     const isCheckbox = optionItem.getAttribute('type') === 'checkbox';
-    const boundOption = optionItem.getAttribute('bindOption');
-    optionItem.addEventListener('change', (e) => {
-      if (isCheckbox) {
-        options[boundOption] = e.target.checked ? true : false;
-      } else {
-        if (e.target.value === 'true' && stringToBoolean) {
-          options[boundOption] = true;
-        } else if (e.target.value === 'false' && stringToBoolean) {
-          options[boundOption] = false;
-        } else {
-          options[boundOption] = e.target.value;
+    const isSelect = optionItem.tagName.toLowerCase() === 'select';
+    const isInput = optionItem.tagName.toLowerCase() === 'input';
+    const isRadio = optionItem.tagName.toLowerCase() === 'radio';
+    const boundOption = optionItem.getAttribute('bindOption') || '';
+    optionItem.addEventListener('change', (e: Event) => {
+      if (e.target) {
+        if (isCheckbox) {
+          stardust.options[boundOption] = (e.target as HTMLInputElement).checked ? true : false;
+        } else if (isSelect) {
+          const target = e.target as HTMLSelectElement;
+          if (target.value === 'true' && stringToBoolean) {
+            stardust.options[boundOption] = true;
+          } else if (target.value === 'false' && stringToBoolean) {
+            stardust.options[boundOption] = false;
+          } else {
+            stardust.options[boundOption] = target.value;
+          }
+        } else if (isInput) {
+          const target = e.target as HTMLInputElement;
+          stardust.options[boundOption] = target.value;
         }
       }
       saveOptions();
     });
-    if (optionItem.tagName.toLowerCase() === 'select') {
-      optionItem.value = options[boundOption];
-    }
-    const value = options[boundOption];
-    optionItem.value = value;
-    if (isCheckbox) {
+
+    const value = stardust.options[boundOption];
+    if (isSelect) {
+      (optionItem as HTMLSelectElement).value = value;
+    } else if (isCheckbox) {
       if (value === true || value === 'true') {
-        optionItem.checked = true;
+        (optionItem as HTMLInputElement).checked = true;
       } else {
-        optionItem.checked = false;
+        (optionItem as HTMLInputElement).checked = false;
       }
     }
   }
@@ -229,17 +251,20 @@ const bindActions = () => {
   for (let i = 0; i < itemsWithActions.length; i++) {
     const boundElement = itemsWithActions[i];
     const actionItems = boundElement.getAttribute('bindAction');
-    const actions = actionItems.split(';');
-    for (let i = 0; i < actions.length; i++) {
-      const action = actions[i].split(':');
-      if (typeof window.stardust.actions[action[1]] !== 'undefined') {
-        boundElement.addEventListener(action[0],
-            window.stardust.actions[action[1]]);
+    if (actionItems) {
+      const actions = actionItems.split(';');
+      for (let i = 0; i < actions.length; i++) {
+        const action = actions[i].split(':');
+        if (typeof stardust.actions[action[1]] !== 'undefined') {
+          boundElement.addEventListener(
+            action[0],
+            stardust.actions[action[1]]
+          );
+        }
       }
     }
   }
 };
-
 
 /** side menu **/
 
@@ -248,19 +273,23 @@ const bindActions = () => {
  * were clicked.
  * @param {object} e A click event.
  */
-const hideSideMenu = (e) => {
-  if (e.target.id !== 'side-menu-button-svg' &&
-      e.target.id !== 'side-menu-button-svg' &&
-      e.target.tagName !== 'path' &&
-      window.sideMenuIsVisible) {
-    let target = e.target;
-    while (target && target !== document.body) {
-      if (target.id === 'side-menu-wrap') {
-        return;
+const hideSideMenu = (e: Event) => {
+  if (e.target) {
+    let target = e.target as HTMLElement;
+    if (
+      target.id !== 'side-menu-button-svg' &&
+      target.id !== 'side-menu-button-svg' &&
+      target.tagName !== 'path' &&
+      stardust.sideMenuIsVisible
+    ) {
+      while (target && target !== document.body) {
+        if (target.id === 'side-menu-wrap') {
+          return;
+        }
+        target = target.parentElement || document.body;
       }
-      target = target.parentElement;
+      toggleSideMenu(true);
     }
-    toggleSideMenu(true);
   }
 };
 
@@ -270,32 +299,33 @@ const hideSideMenu = (e) => {
  * @param {boolean} hide Whether or not to override the toggling behavior.
  */
 const toggleSideMenu = (hide = false) => {
-  const sideMenu = document.getElementById('side-menu-wrap');
-  const headerBack = document.getElementById('header-back-wrap');
-  const headerTitle = document.getElementById('header-title');
-  const state = sideMenu.style.marginRight;
-  headerTitle.classList.add('resizing');
-  self.setTimeout(() => {
-    document.getElementById('header-title').classList.remove('resizing');
-  }, 100);
-  sideMenu.style.right = '0';
-  if (state && (state == '0' || state === '0px') || hide) {
-    sideMenu.style.marginRight = '-450px';
-    window.sideMenuIsVisible = false;
-    headerBack.style.marginLeft = '-40px';
-    headerTitle.style.width = 'calc(100vw - 40px)';
-    headerTitle.classList.remove('navigable');
-  } else {
-    sideMenu.style.marginRight = '0';
-    window.sideMenuIsVisible = true;
-    if (window.innerWidth < 550) {
-      headerBack.style.marginLeft = '0';
-      headerTitle.style.width = `calc(100vw - 80px)`
-      headerTitle.classList.add('navigable');
+  const sideMenu = document.getElementById('side-menu-wrap') as HTMLDivElement;
+  const headerBack = document.getElementById('header-back-wrap') as HTMLDivElement;
+  const headerTitle = document.getElementById('header-title') as HTMLDivElement;
+  if (sideMenu && headerBack && headerTitle) {
+    const state = sideMenu.style.marginRight;
+    headerTitle.classList.add('resizing');
+    self.setTimeout(() => {
+      headerTitle.classList.remove('resizing');
+    }, 100);
+    sideMenu.style.right = '0';
+    if ((state && (state === '0' || state === '0px')) || hide) {
+      sideMenu.style.marginRight = '-450px';
+      stardust.sideMenuIsVisible = false;
+      headerBack.style.marginLeft = '-40px';
+      headerTitle.style.width = 'calc(100vw - 40px)';
+      headerTitle.classList.remove('navigable');
+    } else {
+      sideMenu.style.marginRight = '0';
+      stardust.sideMenuIsVisible = true;
+      if (window.innerWidth < 550) {
+        headerBack.style.marginLeft = '0';
+        headerTitle.style.width = 'calc(100vw - 80px)';
+        headerTitle.classList.add('navigable');
+      }
     }
   }
 };
-
 
 /** security and crypto **/
 
@@ -304,7 +334,7 @@ const toggleSideMenu = (hide = false) => {
  * @param {string} string An unsafe string.
  * @return {string} A safe string.
  */
-const sanitizeString = (string) => {
+const sanitizeString = (string: string) => {
   const p = document.createElement('p');
   p.innerText = string;
   return p.innerHTML.replace(/<br ?\/?>/g, '\n');
@@ -331,21 +361,24 @@ const secureMathRandom = () => {
  * @return {string} A cryptographically secure random string of alphanumeric
  *     characters numberOfCharacters long.
  */
-const secureRandomString = (numberOfCharacters = 32,
-    useSpecialCharacters = false) => {
+const secureRandomString = (
+  numberOfCharacters = 32,
+  useSpecialCharacters = false
+) => {
   let result = '';
-  let validChars = ([
+  let validChars = [
     '0123456789',
     'abcdefghijklmnopqrstuvwxyz',
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  ]).join('');
-  validChars += useSpecialCharacters ? '`~!@#$%^&*()_+-=[]{}\\|;:\'",<.>/?':'';
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+  ].join('');
+  validChars += useSpecialCharacters
+    ? '`~!@#$%^&*()_+-=[]{}\\|;:\'",<.>/?'
+    : '';
   while (result.length < numberOfCharacters) {
     result += validChars[Math.floor(secureMathRandom() * validChars.length)];
   }
   return result;
 };
-
 
 /** themes **/
 
@@ -357,18 +390,18 @@ const secureRandomString = (numberOfCharacters = 32,
  *     options.theme. If provided or defaulted theme is not valid, 'light' will
  *     be used instead.
  */
-const applyStardustTheme = (themeName = options.theme) => {
-  if (window.stardust.themes.indexOf(themeName) < 0) {
+const applyStardustTheme = (themeName = stardust.options.theme) => {
+  if (stardust.themes.indexOf(themeName) < 0) {
     themeName = 'light';
   }
-  window.stardust.selectedTheme = themeName;
+  stardust.selectedTheme = themeName;
   const styles = document.querySelectorAll('.stardust-theme-style');
   for (let i = 0; i < styles.length; i++) {
     document.head.removeChild(styles[i]);
   }
   const themeCssFiles = [
     `lib/stardust/css/stardust-theme-${themeName}.css`,
-    `css/app-theme-${themeName}.css`
+    `css/app-theme-${themeName}.css`,
   ];
   for (let i = 0; i < themeCssFiles.length; i++) {
     const style = document.createElement('link');
@@ -376,7 +409,7 @@ const applyStardustTheme = (themeName = options.theme) => {
     style.setAttribute('class', 'stardust-theme-style');
     style.setAttribute('href', themeCssFiles[i]);
     document.head.appendChild(style);
-  };
+  }
   self.setTimeout(() => {
     if (typeof localStorage !== 'undefined') {
       localStorage.setItem('stardust-primary-color', getThemePrimaryColor());
@@ -393,11 +426,10 @@ const getThemePrimaryColor = () => {
   const element = document.createElement('div');
   element.classList.add('stardust-primary-color');
   document.body.appendChild(element);
-  const primaryColor = (getComputedStyle(element)).color;
+  const primaryColor = getComputedStyle(element).color;
   document.body.removeChild(element);
   return primaryColor;
 };
-
 
 /** splash screen **/
 
@@ -405,15 +437,14 @@ const getThemePrimaryColor = () => {
  * Hides and then removes the splash screen if present.
  */
 const hideSplash = () => {
-  const splash = document.getElementById('splash-wrap');
+  const splash = document.getElementById('splash-wrap') as HTMLDivElement;
   if (splash) {
     splash.style.opacity = '0';
     self.setTimeout(() => {
-      document.body.removeChild(document.getElementById('splash-wrap'));
+      document.body.removeChild(splash);
     }, 200);
   }
 };
-
 
 /** modals **/
 
@@ -430,7 +461,7 @@ const hideSplash = () => {
  * @param {string} modalContent HTML to be added to the body of the modal popup.
  * @param {string=} modalTitle Title of the modal popup.
  */
-const addModal = (modalName, modalContent, modalTitle = '') => {
+const addModal = (modalName: string, modalContent: string, modalTitle = '') => {
   const modalHTML = `
     <div id="${modalName}-wrap" class="modal-wrap" style="display: none;" onclick="hideModalByEvent(event)">
       <div id="${modalName}" class="modal">
@@ -459,8 +490,8 @@ const addModal = (modalName, modalContent, modalTitle = '') => {
  * in HTML, it should be the ID in the <div id="*" class="modal"> tag.
  * @param {string} modalName The name of the modal popup to show.
  */
-const showModal = (modalName) => {
-  const modal = document.querySelector(`#${modalName}-wrap`);
+const showModal = (modalName: string) => {
+  const modal = document.querySelector(`#${modalName}-wrap`) as HTMLDivElement;
   if (modal) {
     modal.style.display = 'block';
   }
@@ -472,8 +503,8 @@ const showModal = (modalName) => {
  * in HTML, it should be the ID in the <div id="*" class="modal"> tag.
  * @param {string} modalName The name of the modal popup hide.
  */
-const hideModal = (modalName) => {
-  const modal = document.querySelector(`#${modalName}-wrap`);
+const hideModal = (modalName: string) => {
+  const modal = document.querySelector(`#${modalName}-wrap`) as HTMLDivElement;
   if (modal) {
     modal.style.display = 'none';
   }
@@ -483,19 +514,25 @@ const hideModal = (modalName) => {
  * Closes the modal popup if passed an event whose target is '.modal-wrap' or
  * '.modal-close-button', meaning the close button or the modal pupup background
  * was clicked.
- * @param {object} event The click event of the user.
+ * @param {object} e The click event of the user.
  */
-const hideModalByEvent = (event) => {
-  const classList = event.target.classList;
-  if (classList && (classList.contains('modal-wrap') ||
-      classList.contains('modal-close-button'))) {
-    const modals = document.getElementsByClassName('modal-wrap');
-    for (let i = 0; i < modals.length; i++) {
-      modals[i].style.display = 'none';
+const hideModalByEvent = (e: Event) => {
+  if (e.target) {
+    const target = e.target as HTMLElement;
+    const classList = target.classList;
+    if (
+      classList &&
+      (classList.contains('modal-wrap') ||
+        classList.contains('modal-close-button'))
+    ) {
+      const modals = document.getElementsByClassName('modal-wrap');
+      for (let i = 0; i < modals.length; i++) {
+        const modal = modals[i] as HTMLDivElement;
+        modal.style.display = 'none';
+      }
     }
   }
 };
-
 
 /** misc helper functions **/
 
@@ -505,54 +542,66 @@ const hideModalByEvent = (event) => {
  * @param {string} name The name of the parameter whose value to return.
  * @return {string} The value associated with that parameter.
  */
-const getUrlParameter = (name) => {
+const getUrlParameter = (name: string) => {
   name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-  let regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-  let results = regex.exec(location.search);
-  return results === null ? '' : decodeURIComponent(
-      results[1].replace(/\+/g, ' '));
+  const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+  const results = regex.exec(location.search);
+  return results === null
+    ? ''
+    : decodeURIComponent(results[1].replace(/\+/g, ' '));
 };
-
 
 /** init **/
 
 /**
  * Bootstraps the Stardust application.
  */
-const initStardust = (initOptions) => {
-  window.stardust = {};
-  window.stardust.actions = {
-    'reset': () => {resetOptions()},
-    'applyTheme': () => {applyStardustTheme()},
-    'reload': () => {document.location.reload()}
+const initStardust = (initOptions: any) => {
+  stardust = {
+    options: {},
+    actions: {
+      reset: () => {
+        resetOptions();
+      },
+      applyTheme: () => {
+        applyStardustTheme();
+      },
+      reload: () => {
+        document.location.reload();
+      },
+    },
+    themes: [
+      'dark',
+      'light'
+    ],
+    selectedTheme: 'light',
+    sideMenuIsVisible: false
   };
-  window.stardust.themes = [
-    'dark',
-    'light'
-  ];
+
   if (initOptions) {
     if (initOptions.actions) {
-      Object.assign(window.stardust.actions, initOptions.actions);
+      stardust.actions = {...stardust.actions, ...initOptions.actions};
     }
     if (initOptions.themes) {
-      Object.assign(window.stardust.themes, initOptions.themes);
+      stardust.themes = {...stardust.themes, ...initOptions.themes};
     }
     if (initOptions.options) {
-      window.appDefaultOptions = initOptions.options;
+      stardust.appDefaultOptions = initOptions.options;
     }
   }
 
-  window.options = getOptions();
-  applyStardustTheme(options.theme);
+  stardust.options = getOptions();
+  applyStardustTheme(stardust.options.theme);
 
-  window.sideMenuIsVisible = false;
-  document.getElementById('side-menu-button-wrap').addEventListener('click',
-      () => {
-    toggleSideMenu();
-  });
-  window.addEventListener('click', (e) => {
-    hideSideMenu(e);
-  });
+  const sideMenuButton = document.getElementById('side-menu-button-wrap') as HTMLDivElement;
+  if (sideMenuButton) {
+    sideMenuButton.addEventListener('click', () => {
+      toggleSideMenu();
+    });
+    window.addEventListener('click', (e: Event) => {
+      hideSideMenu(e);
+    });
+  }
 
   bindOptions();
   bindActions();
@@ -562,3 +611,5 @@ const initStardust = (initOptions) => {
     hideSplash();
   }, 1);
 };
+
+let stardust: Stardust;

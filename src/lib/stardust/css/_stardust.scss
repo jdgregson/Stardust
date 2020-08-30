@@ -53,6 +53,17 @@ img {
 }
 
 
+/** structural wraps **/
+
+#content-inner-wrap {
+    padding: 10px;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+
 /** form elements, buttons, etc. **/
 
 select {
@@ -263,18 +274,6 @@ label:hover:after {
     background: transparent;
 }
 
-
-/** structural wraps **/
-
-#outer-wrap {
-    width: 100%;
-}
-
-#inner-wrap {
-    width: 100%;
-    max-width: 1240px;
-    margin: 0 auto;
-}
 
 
 /** splash screen **/
@@ -502,6 +501,8 @@ label:hover:after {
     z-index: 3;
     background-color: $SDprimaryColor;
     color: $SDtitleTextColor;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 #header-inner {
@@ -652,6 +653,9 @@ label:hover:after {
     background: transparent;
     border-radius: 2px;
     position: relative;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: $SDprimaryColor;
 }
 
 .card-1 {
@@ -660,6 +664,13 @@ label:hover:after {
 
 .card-2 {
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.card-title {
+    color: $SDtitleTextColor;
+    font-size: 20px;
+    border-bottom: 1px solid $SDoutlineColor;
+    margin-bottom: 5px;
 }
 
 

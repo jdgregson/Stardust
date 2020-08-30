@@ -1,11 +1,28 @@
 {
   "name": "Stardust",
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
-    "@babel/plugin-transform-object-assign": "^7.10.4",
-    "@babel/preset-env": "^7.8.3",
-    "babel-preset-minify": "^0.5.1",
-    "node-sass": "^4.14.1"
+    "node-sass-chokidar": "^1.5.0",
+    "gts": "^2.0.2",
+    "typescript": "^3.8.3",
+    "@types/node": "^13.11.1",
+    "concurrently": "5.3.0",
+    "cpx": "1.5.0"
+  },
+  "scripts": {
+    "check": "gts check",
+    "clean": "gts clean",
+    "compile": "tsc",
+    "fix": "gts fix",
+    "prepare": "npm run compile",
+    "pretest": "npm run compile",
+    "posttest": "npm run check",
+    "build-css": "node-sass-chokidar src/ -o build/",
+    "watch-css": "npm run build-css && node-sass-chokidar src/ -o build/ --watch --recursive",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "copy-files": "cpx src/**/*.{html,js,css,png,svg,jpg,txt} build",
+    "watch-files": "cpx src/**/*.{html,js,css,png,svg,jpg,txt} build --watch",
+    "build": "npm run build-css && npm run build-ts && npm run copy-files",
+    "build-watch": "concurrently 'npm:watch-ts' 'npm:watch-css' 'npm:watch-files'"
   }
 }

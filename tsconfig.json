@@ -1,0 +1,30 @@
+{
+  "target": "es5",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "build",
+    "lib": ["dom", "es5"],
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "declaration": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "commonjs",
+    "noEmitOnError": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "pretty": true,
+    "sourceMap": true,
+    "strict": true,
+  },
+  "files": [
+    "src/lib/stardust/js/stardust.ts",
+    "src/js/app.ts"
+  ],
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
