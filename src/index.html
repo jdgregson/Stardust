@@ -57,7 +57,7 @@
 
     <div class="card card-1">
       <div class="card-title">Hello world!</div>
-      <div>Welcome to the Stardust demo!</div>
+      <div>Welcome to the Stardust demo.</div>
       <br>
       <div>Hello text color:
         <span id="hello-color"></span>
@@ -70,32 +70,36 @@
 
 <div id="side-menu-wrap">
   <div id="side-menu-inner">
-    <div class="side-menu-row" bindAction="click:toggleCheckbox">
-      <input bindOption="checkbox_checked" type="checkbox" name="checkbox" id="checkbox" class="large"/>
+<!-- BEGIN MENU ITEMS -->
+
+    <div class="side-menu-row" bind-option="checkbox_checked">
+      <input bind-option="checkbox_checked" type="checkbox" name="checkbox" id="checkbox" class="large"/>
       <label class="side-menu-text" for="checkbox">Toggle checkbox</label>
     </div>
-    <div class="side-menu-row" bindAction="click:showDemoModal">
+    <div class="side-menu-row" bind-action="click:showDemoModal">
       <span class="side-menu-text">Demo modal</span>
     </div>
     <div class="side-menu-hr"></div>
     <div class="side-menu-row">
       <span class="side-menu-text">Theme</span>
       <div class="side-menu-action">
-        <select bindOption="theme" bindAction="change:applyTheme">
+        <select bind-option="theme" bind-action="change:applyTheme">
           <option value="dark">DARK</option>
           <option value="light">LIGHT</option>
         </select>
       </div>
     </div>
-    <div class="side-menu-row" id="reset-button" bindAction="click:showToast">
+    <div class="side-menu-row" id="toast-button" bind-action="click:showToast">
       <span class="side-menu-text">Show a toast</span>
     </div>
-    <div class="side-menu-row" id="reset-button" bindAction="click:showLoadingBar">
+    <div class="side-menu-row" id="reset-button" bind-action="click:showLoadingBar">
       <span class="side-menu-text">Show loading bar</span>
     </div>
-    <div class="side-menu-row" id="reset-button" bindAction="click:reset">
+    <div class="side-menu-row" id="reset-button" bind-action="click:reset">
       <span class="side-menu-text">Reset settings</span>
     </div>
+
+<!-- END MENU ITEMS -->
   </div>
 </div>
 

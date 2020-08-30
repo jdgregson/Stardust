@@ -32,12 +32,6 @@ const initApp = () => {
       showDemoModal: () => {
         showModal('demo');
       },
-      toggleCheckbox: () => {
-        const c = document.getElementById('checkbox');
-        if (c) {
-          c.click();
-        }
-      },
       showToast: () => {
         showToast('This is a toast');
       },

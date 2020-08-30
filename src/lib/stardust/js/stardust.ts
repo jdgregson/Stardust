@@ -135,6 +135,11 @@ const rebindSelectObjects = () => {
   const selects = document.querySelectorAll('select:not(.rebound)');
   for (let i = 0; i < selects.length; i++) {
     const select = selects[i];
+    if (select.getAttribute('options-bound') ||
+        select.getAttribute('actions-bound')) {
+      select.removeAttribute('options-bound');
+      select.removeAttribute('actions-bound');
+    }
     const wrap = document.createElement('div');
     wrap.setAttribute('class', 'select-wrap');
     wrap.innerHTML = select.outerHTML;
@@ -200,68 +205,112 @@ const resetOptions = (reload = true) => {
 };
 
 /**
- * Binds options on the page to the corresponding options in the options object,
- * sets up option change events, and sets the state of the options on the page.
+ * Binds options on the page (using the 'bind-option' attribute) to the
+ * corresponding options in the options object, sets up option click and change
+ * events, and sets the state of the options on the page. An example of how to
+ * use this would be to add an option 'foo' in your app when you initialize
+ * Stardust:
+ *
+ *     initStardust({...},
+ *       options: {
+ *         foo: false,
+ *       },
+ *     });
+ *
+ * Then use the 'bind-option' tag on an HTML input on the page:
+ *
+ *     <input type="checkbox" bind-option="foo" ... />
+ *
+ * The bindOption function will be called when initStardust() is run, so if your
+ * options are hard-coded in index.html or before initializing Stardust you
+ * shouldn't need to do anything else. However, if you add options after page
+ * load or after running initStardust() you will need to call:
+ *
+ *     bindOption();
+ *
+ * @param {boolean=} stringToBoolean Whether or not to convert strings 'true'
+ *     and 'false' to boolean values when changed. Default is true.
  */
 const bindOptions = (stringToBoolean = true) => {
-  const optionItems = document.querySelectorAll('[bindOption]');
+  const optionItems = document.querySelectorAll('[bind-option]');
   for (let i = 0; i < optionItems.length; i++) {
     const optionItem = optionItems[i] as HTMLElement;
+    const optionItemTag = optionItem.tagName.toLowerCase();
     const isCheckbox = optionItem.getAttribute('type') === 'checkbox';
-    const isSelect = optionItem.tagName.toLowerCase() === 'select';
-    const isInput = optionItem.tagName.toLowerCase() === 'input';
-    const isRadio = optionItem.tagName.toLowerCase() === 'radio';
-    const boundOption = optionItem.getAttribute('bindOption') || '';
-    optionItem.addEventListener('change', (e: Event) => {
-      if (e.target) {
-        if (isCheckbox) {
-          stardust.options[boundOption] = (e.target as HTMLInputElement).checked ? true : false;
-        } else if (isSelect) {
-          const target = e.target as HTMLSelectElement;
-          if (target.value === 'true' && stringToBoolean) {
-            stardust.options[boundOption] = true;
-          } else if (target.value === 'false' && stringToBoolean) {
-            stardust.options[boundOption] = false;
-          } else {
-            stardust.options[boundOption] = target.value;
+    const isSelect = optionItemTag === 'select';
+    const isInput = optionItemTag === 'input';
+    const isRadio = optionItemTag === 'radio';
+    const boundOption = optionItem.getAttribute('bind-option') || '';
+    if (!optionItem.getAttribute('options-bound')) {
+      if (optionItemTag !== 'div' && optionItemTag !== 'span') {
+        optionItem.addEventListener('change', (e: Event) => {
+          if (e.target) {
+            if (isCheckbox) {
+              stardust.options[boundOption] =
+                  (e.target as HTMLInputElement).checked ? true : false;
+            } else if (isSelect) {
+              const target = e.target as HTMLSelectElement;
+              if (target.value === 'true' && stringToBoolean) {
+                stardust.options[boundOption] = true;
+              } else if (target.value === 'false' && stringToBoolean) {
+                stardust.options[boundOption] = false;
+              } else {
+                stardust.options[boundOption] = target.value;
+              }
+            } else if (isInput) {
+              const target = e.target as HTMLInputElement;
+              stardust.options[boundOption] = target.value;
+            }
           }
-        } else if (isInput) {
-          const target = e.target as HTMLInputElement;
-          stardust.options[boundOption] = target.value;
-        }
+          saveOptions();
+        });
+      } else {
+        optionItem.addEventListener('click', (e: Event) => {
+          if (e.target === optionItem) {
+            const innerItem = optionItem.querySelector('[bind-option]');
+            if (innerItem) {
+              const innerItemTagName = innerItem.tagName.toLowerCase();
+              if (innerItem.getAttribute('type') === 'checkbox') {
+                (innerItem as HTMLInputElement).click();
+              }
+            }
+          }
+        });
+        optionItem.setAttribute('options-bound', 'true');
       }
-      saveOptions();
-    });
+    }
 
     const value = stardust.options[boundOption];
     if (isSelect) {
-      (optionItem as HTMLSelectElement).value = value;
+      const item = optionItem as HTMLSelectElement
+      item.value = value;
+      item.setAttribute('options-bound', 'true');
     } else if (isCheckbox) {
+      const item = optionItem as HTMLInputElement;
       if (value === true || value === 'true') {
-        (optionItem as HTMLInputElement).checked = true;
+        item.checked = true;
       } else {
-        (optionItem as HTMLInputElement).checked = false;
+        item.checked = false;
       }
+      item.setAttribute('options-bound', 'true');
     }
   }
 };
 
 const bindActions = () => {
-  const itemsWithActions = document.querySelectorAll('[bindAction]');
+  const itemsWithActions = document.querySelectorAll('[bind-action]');
   for (let i = 0; i < itemsWithActions.length; i++) {
     const boundElement = itemsWithActions[i];
-    const actionItems = boundElement.getAttribute('bindAction');
-    if (actionItems) {
+    const actionItems = boundElement.getAttribute('bind-action');
+    if (actionItems && !boundElement.getAttribute('actions-bound')) {
       const actions = actionItems.split(';');
       for (let i = 0; i < actions.length; i++) {
         const action = actions[i].split(':');
         if (typeof stardust.actions[action[1]] !== 'undefined') {
-          boundElement.addEventListener(
-            action[0],
-            stardust.actions[action[1]]
-          );
+          boundElement.addEventListener(action[0], stardust.actions[action[1]]);
         }
       }
+      boundElement.setAttribute('actions-bound', 'true');
     }
   }
 };
@@ -520,11 +569,8 @@ const hideModalByEvent = (e: Event) => {
   if (e.target) {
     const target = e.target as HTMLElement;
     const classList = target.classList;
-    if (
-      classList &&
-      (classList.contains('modal-wrap') ||
-        classList.contains('modal-close-button'))
-    ) {
+    if (classList && (classList.contains('modal-wrap') ||
+        classList.contains('modal-close-button'))) {
       const modals = document.getElementsByClassName('modal-wrap');
       for (let i = 0; i < modals.length; i++) {
         const modal = modals[i] as HTMLDivElement;
@@ -593,7 +639,8 @@ const initStardust = (initOptions: any) => {
   stardust.options = getOptions();
   applyStardustTheme(stardust.options.theme);
 
-  const sideMenuButton = document.getElementById('side-menu-button-wrap') as HTMLDivElement;
+  const sideMenuButton =
+      document.getElementById('side-menu-button-wrap') as HTMLDivElement;
   if (sideMenuButton) {
     sideMenuButton.addEventListener('click', () => {
       toggleSideMenu();
