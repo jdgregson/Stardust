@@ -5,8 +5,8 @@
     "gts": "^2.0.2",
     "typescript": "^3.8.3",
     "@types/node": "^13.11.1",
-    "copyfiles": "^2.3.0",
-    "concurrently": "5.3.0"
+    "concurrently": "5.3.0",
+    "cpx": "1.5.0"
   },
   "scripts": {
     "check": "gts check",
@@ -20,8 +20,9 @@
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o build/ --watch --recursive",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
-    "copy-files": "copyfiles -e **/*.ts -e **/*.scss -u 1 src/**/* build",
+    "copy-files": "cpx src/**/*.{html,js,css,png,svg,jpg,txt} build",
+    "watch-files": "cpx src/**/*.{html,js,css,png,svg,jpg,txt} build --watch",
     "build": "npm run build-css && npm run build-ts && npm run copy-files",
-    "build-watch": "npm run copy-files && concurrently 'npm:watch-ts' 'npm:watch-css'"
+    "build-watch": "concurrently 'npm:watch-ts' 'npm:watch-css' 'npm:watch-files'"
   }
 }
