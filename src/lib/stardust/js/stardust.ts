@@ -12,6 +12,10 @@ interface StardustOptions {
   [key: string]: any;
 }
 
+interface AppOptions {
+  [key: string]: any;
+}
+
 interface Stardust {
   options?: any;
   appDefaultOptions?: any;
@@ -640,7 +644,7 @@ const getUrlParameter = (name: string) => {
 /**
  * Bootstraps the Stardust application.
  */
-const initStardust = (initOptions: any) => {
+const initStardust = (initOptions: AppOptions) => {
   stardust = {
     options: {},
     actions: {

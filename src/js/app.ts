@@ -42,5 +42,5 @@ const initApp = () => {
     options: {
       checkbox_checked: true,
     },
-  });
+  } as AppOptions);
 };
