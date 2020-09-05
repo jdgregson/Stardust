@@ -16,6 +16,12 @@ View the [Stardust Demo](https://jdgregson.github.io/stardust-demo/).
 - Small JavaScrpt library
 
 ## How to build a Stardust app
-These notes are mostly for me:
+These notes are mostly for me.
+
+Install dev dependencies:
+ - Needs NodeJS > 14.0
+ - `npm install`
+
+Build Stardust:
  - Run a one-time build: `npm run build`
  - Build and watch: `npm run build-watch`
