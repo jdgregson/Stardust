@@ -14,3 +14,8 @@ View the [Stardust Demo](https://jdgregson.github.io/stardust-demo/).
 - Build scripts for TypeScript, SCSS, and copying files
 - Small CSS library
 - Small JavaScrpt library
+
+## How to build a Stardust app
+These notes are mostly for me:
+ - Run a one-time build: `npm run build`
+ - Build and watch: `npm run build-watch`
