@@ -684,6 +684,8 @@ const initStardust = (initOptions: AppOptions) => {
     sideMenuIsVisible: false
   };
 
+  // Merge Stardust built-in actions, themes, and options with any app-provided
+  // ones.
   if (initOptions) {
     if (initOptions.actions) {
       stardust.actions = {...stardust.actions, ...initOptions.actions};
@@ -696,9 +698,11 @@ const initStardust = (initOptions: AppOptions) => {
     }
   }
 
+  // Load options and themes.
   stardust.options = getOptions();
   applyStardustTheme(stardust.options.theme);
 
+  // Initialize side menu.
   const sideMenuButton =
       document.getElementById('side-menu-button-wrap') as HTMLDivElement;
   if (sideMenuButton) {
