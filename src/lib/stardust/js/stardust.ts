@@ -128,6 +128,11 @@ const updateLoadingBar = (percent: number) => {
   }
 };
 
+/**
+ * Updates the height of all bumper divs. Bumpers (a div with class .bumper) are
+ * meant to push content down the page when the div above them is absolutely
+ * positioned.
+ */
 const updateBumpers = () => {
   const bumpers = document.getElementsByClassName('bumper');
   for (let i = 0; i < bumpers.length; i++) {
@@ -705,7 +710,18 @@ const initStardust = (initOptions: AppOptions) => {
     });
   }
 
+  // Set bumpers to update every 100ms for two seconds after load to ensure
+  // they accommodate content that may be added to the DOM after load, and then
+  // set bumpers to update whenever the window is resized.
+  // TODO: Look into doing this with a ResizeObserver, but there is no IE 11
+  // support. Maybe a MutationObserver instead?
   updateBumpers();
+  const bumperPageloadTimer = self.setInterval(() => {
+    updateBumpers();
+  }, 100);
+  self.setTimeout(() => {
+    self.clearInterval(bumperPageloadTimer);
+  }, 2000);
   window.addEventListener('resize', () => {
     updateBumpers();
   });
