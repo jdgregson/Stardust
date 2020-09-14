@@ -128,6 +128,19 @@ const updateLoadingBar = (percent: number) => {
   }
 };
 
+const updateBumpers = () => {
+  const bumpers = document.getElementsByClassName('bumper');
+  for (let i = 0; i < bumpers.length; i++) {
+    const bumper = bumpers[i] as HTMLDivElement;
+    if (bumper.previousElementSibling &&
+        bumper.previousElementSibling.tagName.toLowerCase() === 'div') {
+      const bumperTarget = bumper.previousElementSibling as HTMLDivElement;
+      const bumperTargetStyle = getComputedStyle(bumperTarget);
+      bumper.style.height = bumperTargetStyle.height;
+    }
+  }
+};
+
 /** DOM overrides **/
 
 /**
@@ -691,6 +704,11 @@ const initStardust = (initOptions: AppOptions) => {
       hideSideMenu(e);
     });
   }
+
+  updateBumpers();
+  window.addEventListener('resize', () => {
+    updateBumpers();
+  });
 
   bindOptions();
   bindActions();
