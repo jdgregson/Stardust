@@ -14,11 +14,11 @@
  * $SDtertiaryColor
  * $SDactionColor
  * $SDactionTextColor
+ * $SDlinkTextColor
+ * $SDlinkTextColorVisited
  * $SDtitleTextColor
  * $SDinvertedActionTextColor
  * $SDoutlineColor
- * $SDlinkColor
- * $SDlinkColorVisited
  * $SDtextColor
  * $SDplaceholderTextColor
  * $SDwarningColor
@@ -50,6 +50,14 @@ body, * {
 img {
     width: 100%;
     height: auto;
+}
+
+a, a:link {
+    color: $SDlinkTextColor;
+}
+
+a:visited, a:active {
+    color: $SDlinkTextColorVisited;
 }
 
 
