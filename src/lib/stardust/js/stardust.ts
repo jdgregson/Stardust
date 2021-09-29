@@ -444,9 +444,13 @@ const toggleSideMenu = (hide = false) => {
  * @return {string} A safe string.
  */
 const sanitizeString = (string: string) => {
-  const p = document.createElement('p');
-  p.innerText = string;
-  return p.innerHTML.replace(/<br ?\/?>/g, '\n');
+  return string
+    .replace(/<br ?\/?>/g, '\n')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 };
 
 /**
