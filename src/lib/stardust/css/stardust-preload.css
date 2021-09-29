@@ -5,16 +5,16 @@
  */
 
 #splash-wrap {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99999999;
-    background-color: #ffffff;
-    transition: opacity 0.1s ease-in-out;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999999;
+  background-color: #ffffff;
+  transition: opacity 0.1s ease-in-out;
 }
 
 #splash-inner {
-    display: none;
+  display: none;
 }

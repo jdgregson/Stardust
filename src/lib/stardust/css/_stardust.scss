@@ -27,371 +27,364 @@
  * $SDwarningBorder
  */
 
-
 /** stardust **/
 
 .stardust-primary-color {
-    color: $SDprimaryColor;
+  color: $SDprimaryColor;
 }
-
 
 /** overrides **/
 
 body {
-    margin: 0;
-    background-color: $SDprimaryColor;
-    color: $SDtextColor;
+  margin: 0;
+  background-color: $SDprimaryColor;
+  color: $SDtextColor;
 }
 
-body, * {
-    font-family: $SDprimaryFont;
+body,
+* {
+  font-family: $SDprimaryFont;
 }
 
 img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
 
-a, a:link {
-    color: $SDlinkTextColor;
+a,
+a:link {
+  color: $SDlinkTextColor;
 }
 
-a:visited, a:active {
-    color: $SDlinkTextColorVisited;
+a:visited,
+a:active {
+  color: $SDlinkTextColorVisited;
 }
-
 
 /** structural wraps **/
 
 #content-inner-wrap {
-    padding: 10px;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    box-sizing: border-box;
+  padding: 10px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
-
 
 /** form elements, buttons, etc. **/
 
 select {
-    border: none;
-    padding: 3px;
-    font-family: $SDprimaryFont;
-    color: $SDactionTextColor;
-    font-weight: bold;
-    cursor: pointer;
-    appearance: none;
-    -moz-appearance: none;
-    padding-right: 14px;
-    position: relative;
-    background-color: transparent;
-    outline: none;
+  border: none;
+  padding: 3px;
+  font-family: $SDprimaryFont;
+  color: $SDactionTextColor;
+  font-weight: bold;
+  cursor: pointer;
+  appearance: none;
+  -moz-appearance: none;
+  padding-right: 14px;
+  position: relative;
+  background-color: transparent;
+  outline: none;
 }
 
 option {
-    outline: none;
-    background-color: $SDprimaryColor;
-    color: $SDtextColor;
+  outline: none;
+  background-color: $SDprimaryColor;
+  color: $SDtextColor;
 }
 
 .select-wrap {
-    border: 2px solid $SDactionColor;
-    border-radius: 5px;
-    line-height: initial;
-    background-color: transparent;
-    display: inline-block;
+  border: 2px solid $SDactionColor;
+  border-radius: 5px;
+  line-height: initial;
+  background-color: transparent;
+  display: inline-block;
 }
 
 .select-wrap::after {
-    content: "^";
-    font-family: $SDprimaryFont;
-    font-size: 14px;
-    color: $SDactionTextColor;
-    font-weight: bold;
-    padding-right: 5px;
-    transform: rotate(180deg) !important;
-    display: inline-block;
-    transform-origin: 2px 7px;
-    margin-left: -10px;
+  content: '^';
+  font-family: $SDprimaryFont;
+  font-size: 14px;
+  color: $SDactionTextColor;
+  font-weight: bold;
+  padding-right: 5px;
+  transform: rotate(180deg) !important;
+  display: inline-block;
+  transform-origin: 2px 7px;
+  margin-left: -10px;
 }
 
 button,
 .button-1 {
-    min-width: 50px;
-    border-radius: 5px;
-    padding: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    outline: none;
-    border: 2px solid $SDactionColor;
-    background-color: $SDactionColor;
-    color: $SDprimaryColor;
-    margin-left: 10px;
+  min-width: 50px;
+  border-radius: 5px;
+  padding: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+  border: 2px solid $SDactionColor;
+  background-color: $SDactionColor;
+  color: $SDprimaryColor;
+  margin-left: 10px;
 }
 
 .button-2 {
-    background-color: transparent;
-    color: $SDactionTextColor;
+  background-color: transparent;
+  color: $SDactionTextColor;
 }
 
 .button-3 {
-    background-color: transparent;
-    color: $SDactionTextColor;
-    border: 2px solid transparent;
+  background-color: transparent;
+  color: $SDactionTextColor;
+  border: 2px solid transparent;
 }
-
 
 /** check boxes **/
 
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
-    position: absolute;
-    left: -9999px;
+[type='checkbox']:not(:checked),
+[type='checkbox']:checked {
+  position: absolute;
+  left: -9999px;
 }
 
-[type="checkbox"]:not(:checked) + label,
-[type="checkbox"]:checked + label {
-    position: relative;
-    padding-left: 1.95em;
-    cursor: pointer;
+[type='checkbox']:not(:checked) + label,
+[type='checkbox']:checked + label {
+  position: relative;
+  padding-left: 1.95em;
+  cursor: pointer;
 }
 
-[type="checkbox"]:not(:checked) + label:before,
-[type="checkbox"]:checked + label:before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 15px;
-    height: 15px;
-    border: 2px solid $SDactionColor;
-    background: $SDprimaryColor;
-    border-radius: 4px;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,.1);
+[type='checkbox']:not(:checked) + label:before,
+[type='checkbox']:checked + label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 15px;
+  height: 15px;
+  border: 2px solid $SDactionColor;
+  background: $SDprimaryColor;
+  border-radius: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.large[type="checkbox"]:not(:checked) + label:before,
-.large[type="checkbox"]:checked + label:before {
-    width: 20px;
-    height: 20px;
+.large[type='checkbox']:not(:checked) + label:before,
+.large[type='checkbox']:checked + label:before {
+  width: 20px;
+  height: 20px;
 }
 
-[type="checkbox"]:not(:checked) + label:after,
-[type="checkbox"]:checked + label:after {
-    content: 'L';
-    position: absolute;
-    top: 3px;
-    left: 5px;
-    line-height: 0.8;
-    color: $SDactionColor;
-    transition: all .2s;
-    font-family: "Roboto", sans-serif;
-    font-weight: bold;
-    transform: scaleX(-1) rotate(-35deg) !important;
-    font-size: 15px;
+[type='checkbox']:not(:checked) + label:after,
+[type='checkbox']:checked + label:after {
+  content: 'L';
+  position: absolute;
+  top: 3px;
+  left: 5px;
+  line-height: 0.8;
+  color: $SDactionColor;
+  transition: all 0.2s;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  transform: scaleX(-1) rotate(-35deg) !important;
+  font-size: 15px;
 }
 
-.large[type="checkbox"]:not(:checked) + label:after,
-.large[type="checkbox"]:checked + label:after {
-    font-size: 20px;
-    left: 7px;
+.large[type='checkbox']:not(:checked) + label:after,
+.large[type='checkbox']:checked + label:after {
+  font-size: 20px;
+  left: 7px;
 }
 
-[type="checkbox"]:not(:checked) + label:after {
-    opacity: 0;
-    transform: scale(0);
+[type='checkbox']:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
 }
 
-[type="checkbox"]:checked + label:after {
-    opacity: 1;
-    transform: scale(1);
+[type='checkbox']:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
 }
 
-[type="checkbox"]:disabled:not(:checked) + label:before,
-[type="checkbox"]:disabled:checked + label:before {
-    box-shadow: none;
-    border-color: $SDoutlineColor;
-    background-color: $SDsecondaryColor;
+[type='checkbox']:disabled:not(:checked) + label:before,
+[type='checkbox']:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: $SDoutlineColor;
+  background-color: $SDsecondaryColor;
 }
 
-[type="checkbox"]:disabled:checked + label:after {
-    color: $SDsecondaryColor;
+[type='checkbox']:disabled:checked + label:after {
+  color: $SDsecondaryColor;
 }
 
-[type="checkbox"]:disabled + label {
-    color: $SDsecondaryColor;
+[type='checkbox']:disabled + label {
+  color: $SDsecondaryColor;
 }
 
-[type="checkbox"]:checked:focus + label:before,
-[type="checkbox"]:not(:checked):focus + label:before {
-    border: 2px solid $SDactionColor;
+[type='checkbox']:checked:focus + label:before,
+[type='checkbox']:not(:checked):focus + label:before {
+  border: 2px solid $SDactionColor;
 }
 
 label:hover:before {
-    border: 2px solid $SDactionColor !important;
-    background-color: $SDactionColor !important;
+  border: 2px solid $SDactionColor !important;
+  background-color: $SDactionColor !important;
 }
 
 label:hover:after {
-    color: $SDprimaryColor !important;
+  color: $SDprimaryColor !important;
 }
-
 
 /** scroll bars **/
 
 ::-webkit-scrollbar {
-    width: 7px;
-    height: 7px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-button {
-    width: 0px;
-    height: 0px;
+  width: 0px;
+  height: 0px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: $SDactionColor;
-    border: 0px none transparent;
-    border-radius: 50px;
+  background: $SDactionColor;
+  border: 0px none transparent;
+  border-radius: 50px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: $SDactionColor;
+  background: $SDactionColor;
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background: $SDactionColor;
+  background: $SDactionColor;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
-    border: 0px none transparent;
-    border-radius: 0px;
+  background: transparent;
+  border: 0px none transparent;
+  border-radius: 0px;
 }
 
 ::-webkit-scrollbar-track:hover {
-    background: transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-track:active {
-    background: transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-corner {
-    background: transparent;
+  background: transparent;
 }
-
-
 
 /** splash screen **/
 
 #splash-wrap {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 99999999;
-    background-color: $SDprimaryColor;
-    transition: opacity 0.2s ease-in-out;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99999999;
+  background-color: $SDprimaryColor;
+  transition: opacity 0.2s ease-in-out;
 }
 
 #splash-inner {
-    display: initial;
-    text-align: center;
-    top: 50%;
-    position: absolute;
-    transform: translateY(-50%);
-    margin: 0 auto;
-    width: 100%;
+  display: initial;
+  text-align: center;
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+  margin: 0 auto;
+  width: 100%;
 }
 
 #splash-title {
-    font-size: 2em;
-    font-weight: lighter;
+  font-size: 2em;
+  font-weight: lighter;
 }
 
 #splash-text {
 }
 
-
 /** modals **/
 
 .modal-wrap {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #000000b0;
-    z-index: 100;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #000000b0;
+  z-index: 100;
 }
 
 .modal {
-    position: absolute;
-    width: 60vw;
-    height: 60vh;
-    margin: 20vh 20vw;
-    background-color: $SDprimaryColor;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 2px;
+  position: absolute;
+  width: 60vw;
+  height: 60vh;
+  margin: 20vh 20vw;
+  background-color: $SDprimaryColor;
+  padding: 10px;
+  box-sizing: border-box;
+  border-radius: 2px;
 }
 
 .modal-title-wrap {
-    height: 25px;
-    z-index: 101;
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    padding: 5px;
-    box-sizing: border-box;
+  height: 25px;
+  z-index: 101;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
 .modal-title {
-    display: inline-block;
-    font-size: 20px;
-    user-select: none;
-    -moz-user-select: none;
+  display: inline-block;
+  font-size: 20px;
+  user-select: none;
+  -moz-user-select: none;
 }
 
 .modal-close-button {
-    display: inline-block;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    font-weight: bold;
-    color: #aaa;
-    transform: rotate(45deg);
-    font-size: 27px;
-    line-height: 20px;
-    cursor: pointer;
+  display: inline-block;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: #aaa;
+  transform: rotate(45deg);
+  font-size: 27px;
+  line-height: 20px;
+  cursor: pointer;
 }
 
 .modal-content-wrap {
-    width: calc(100% - 20px);
-    height: calc(100% - 90px);
-    top: 40px;
-    left: 10px;
-    position: absolute;
-    overflow: auto;
+  width: calc(100% - 20px);
+  height: calc(100% - 90px);
+  top: 40px;
+  left: 10px;
+  position: absolute;
+  overflow: auto;
 }
 
 .modal-button-wrap {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    padding: 10px;
-    box-sizing: border-box;
-    text-align: right;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: right;
 }
-
 
 /** grid classes **/
 
@@ -406,317 +399,309 @@ label:hover:after {
 .two-fourths,
 .two-sixths,
 .two-thirds {
-    float: left;
-    margin-left: 2.564102564102564%;
+  float: left;
+  margin-left: 2.564102564102564%;
 }
 
 .one-half,
 .three-sixths,
 .two-fourths {
-    width: 48.717948717948715%;
+  width: 48.717948717948715%;
 }
 
 .one-third,
 .two-sixths {
-    width: 31.623931623931625%;
+  width: 31.623931623931625%;
 }
 
 .four-sixths,
 .two-thirds {
-    width: 65.81196581196582%;
+  width: 65.81196581196582%;
 }
 
 .one-fourth {
-    width: 23.076923076923077%;
+  width: 23.076923076923077%;
 }
 
 .three-fourths {
-    width: 74.35897435897436%;
+  width: 74.35897435897436%;
 }
 
 .one-sixth {
-    width: 14.52991452991453%;
+  width: 14.52991452991453%;
 }
 
 .five-sixths {
-    width: 82.90598290598291%;
+  width: 82.90598290598291%;
 }
 
 .first {
-    clear: both;
-    margin-left: 0;
+  clear: both;
+  margin-left: 0;
 }
-
 
 /** toast **/
 
 .toast-wrap {
-    width: 100%;
-    bottom: 20px;
-    position: fixed;
-    text-align: center;
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
-    z-index: 1000;
+  width: 100%;
+  bottom: 20px;
+  position: fixed;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+  z-index: 1000;
 }
 
 .toast {
-    position: relative;
-    display: inline-block;
-    background-color: $SDactionColor;
-    padding: 9px 18px 9px 18px;
-    color: $SDinvertedActionTextColor;
-    border-radius: 30px;
-    margin: 10px 10px;
+  position: relative;
+  display: inline-block;
+  background-color: $SDactionColor;
+  padding: 9px 18px 9px 18px;
+  color: $SDinvertedActionTextColor;
+  border-radius: 30px;
+  margin: 10px 10px;
 }
 
 .toast a {
-    color: #fff;
-    cursor: pointer;
-    text-decoration: underline;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .toasted {
-    cursor: pointer;
-    text-decoration: underline;
-    color: $SDactionColor;
+  cursor: pointer;
+  text-decoration: underline;
+  color: $SDactionColor;
 }
-
 
 /** tip orb **/
 
 .tooltip-orb {
-    width: 10px;
-    height: 10px;
-    border-radius: 10px;
-    border: 1px solid #3434f966;
-    position: absolute;
-    transition: all 0.5s ease-in-out;
-    pointer-events: none;
-    overflow-x: hidden;
-    overflow-y: hidden;
+  width: 10px;
+  height: 10px;
+  border-radius: 10px;
+  border: 1px solid #3434f966;
+  position: absolute;
+  transition: all 0.5s ease-in-out;
+  pointer-events: none;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
-
 
 /** header **/
 
 #header {
-    position: fixed;
-    width: 100%;
-    height: 40px;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    background-color: $SDprimaryColor;
-    color: $SDtitleTextColor;
-    border-radius: 2px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  position: fixed;
+  width: 100%;
+  height: 40px;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  background-color: $SDprimaryColor;
+  color: $SDtitleTextColor;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 #header-inner {
-    max-width: 1240px;
-    width: 100%;
-    margin: 0 auto;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 #header-title {
-    display: inline-block;
-    font-family: $SDprimaryFont;
-    font-weight: lighter;
-    font-weight: initial;
-    margin: 0 !important;
-    padding: 5px;
-    font-size: 25px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    cursor: default;
-    width: calc(100vw - 40px);
+  display: inline-block;
+  font-family: $SDprimaryFont;
+  font-weight: lighter;
+  font-weight: initial;
+  margin: 0 !important;
+  padding: 5px;
+  font-size: 25px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: default;
+  width: calc(100vw - 40px);
 }
 
 #header-title.resizing {
-    transition: width 0.1s ease-in-out;
+  transition: width 0.1s ease-in-out;
 }
 
 #header-title.navigable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #header-back-wrap {
-    display: none;
-    width: 40px;
-    height: 40px;
-    float: left;
-    cursor: pointer;
-    margin-left: -40px;
-    transition: margin-left 0.1s ease-in-out;
+  display: none;
+  width: 40px;
+  height: 40px;
+  float: left;
+  cursor: pointer;
+  margin-left: -40px;
+  transition: margin-left 0.1s ease-in-out;
 }
 
 #header-back-svg path {
-    fill: none;
-    stroke: $SDactionColor;
-    stroke-width: 5px;
-    pointer-events: none;
+  fill: none;
+  stroke: $SDactionColor;
+  stroke-width: 5px;
+  pointer-events: none;
 }
-
 
 /** side menu **/
 
 #side-menu-button-wrap {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    float: right;
-    cursor: pointer;
-    position: absolute;
-    right: 0;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  float: right;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
 }
 
 #side-menu-button-wrap:hover {
-    background-color: $SDsecondaryColor;
+  background-color: $SDsecondaryColor;
 }
 
 #side-menu-button-svg,
 #header-back-svg {
-    display: inline-block;
-    width: 40px;
-    height: 40px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
 }
 
 #side-menu-button-svg path {
-    fill: none;
-    stroke: $SDactionColor;
-    stroke-width: 4px;
+  fill: none;
+  stroke: $SDactionColor;
+  stroke-width: 4px;
 }
 
 #side-menu-wrap {
-    display: block;
-    position: fixed;
-    top: 0;
-    right: -450px;
-    height: 100vh;
-    width: 100%;
-    max-width: 450px;
-    margin-right: -450px;
-    z-index: 2;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    transition: margin 0.1s ease-in-out;
-    overflow: hidden;
+  display: block;
+  position: fixed;
+  top: 0;
+  right: -450px;
+  height: 100vh;
+  width: 100%;
+  max-width: 450px;
+  margin-right: -450px;
+  z-index: 2;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  transition: margin 0.1s ease-in-out;
+  overflow: hidden;
 }
 
 #side-menu-inner {
-    width: 100%;
-    height: 100%;
-    background-color: $SDsecondaryColor;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-    padding-top: 70px;
-    box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: $SDsecondaryColor;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  padding-top: 70px;
+  box-sizing: border-box;
 }
 
 #side-menu-inner a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .side-menu-row {
-    width: 100%;
-    height: 45px;
-    line-height: 44px;
-    padding: 0 10px 0 10px;
-    box-sizing: border-box;
-    font-size: 20px;
-    color: $SDtextColor;
-    user-select: none;
-    -moz-user-select: none;
+  width: 100%;
+  height: 45px;
+  line-height: 44px;
+  padding: 0 10px 0 10px;
+  box-sizing: border-box;
+  font-size: 20px;
+  color: $SDtextColor;
+  user-select: none;
+  -moz-user-select: none;
 }
 
 .side-menu-row[bindaction] {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .side-menu-row:hover {
-    background-color: $SDtertiaryColor;
+  background-color: $SDtertiaryColor;
 }
 
 .side-menu-hr {
-    margin: 10px;
-    border: 1px solid $SDoutlineColor;
+  margin: 10px;
+  border: 1px solid $SDoutlineColor;
 }
 
 .side-menu-text {
-    text-align: left;
+  text-align: left;
 }
 
 .side-menu-action {
-    display: inline-block;
+  display: inline-block;
 }
-
 
 /** cards **/
 
 .card {
-    background: transparent;
-    border-radius: 2px;
-    position: relative;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: $SDprimaryColor;
+  background: transparent;
+  border-radius: 2px;
+  position: relative;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: $SDprimaryColor;
 }
 
 .card-1 {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
 }
 
 .card-2 {
-    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .card-title {
-    color: $SDtitleTextColor;
-    font-size: 20px;
-    border-bottom: 1px solid $SDoutlineColor;
-    margin-bottom: 5px;
+  color: $SDtitleTextColor;
+  font-size: 20px;
+  border-bottom: 1px solid $SDoutlineColor;
+  margin-bottom: 5px;
 }
-
 
 /** misc helpers **/
 
 .hidden {
-    display: none;
+  display: none;
 }
-
 
 /** loading bar **/
 
 #loading-bar {
-    position: fixed;
-    z-index: 1000;
-    top: 40px;
-    left: -100%;
-    width: 100%;
-    height: 5px;
-    background-color: $SDactionColor;
-    transition: left 0.1s ease-in-out;
+  position: fixed;
+  z-index: 1000;
+  top: 40px;
+  left: -100%;
+  width: 100%;
+  height: 5px;
+  background-color: $SDactionColor;
+  transition: left 0.1s ease-in-out;
 }
-
 
 /** media queries **/
 
 @media (min-width: 1270px) {
-    #header-title {
-        width: 1200px !important;
-    }
+  #header-title {
+    width: 1200px !important;
+  }
 }
 
 @media (max-width: 1240px) {
-    #header-back-wrap {
-        display: block;
-    }
+  #header-back-wrap {
+    display: block;
+  }
 }
 
 @media (max-width: 600px), (max-height: 600px) {
-    .modal {
-        width: 90vw;
-        height: 90vh;
-        margin: 5vh 5vw;
-    }
+  .modal {
+    width: 90vw;
+    height: 90vh;
+    margin: 5vh 5vw;
+  }
 }

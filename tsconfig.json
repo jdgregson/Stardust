@@ -14,17 +14,9 @@
     "noImplicitReturns": true,
     "pretty": true,
     "sourceMap": true,
-    "strict": true,
+    "strict": true
   },
-  "files": [
-    "src/lib/stardust/js/stardust.ts",
-    "src/js/app.ts"
-  ],
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "files": ["src/lib/stardust/js/stardust.ts", "src/js/app.ts"],
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "exclude": ["node_modules"]
 }

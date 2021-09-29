@@ -137,8 +137,10 @@ const updateBumpers = () => {
   const bumpers = document.getElementsByClassName('bumper');
   for (let i = 0; i < bumpers.length; i++) {
     const bumper = bumpers[i] as HTMLDivElement;
-    if (bumper.previousElementSibling &&
-        bumper.previousElementSibling.tagName.toLowerCase() === 'div') {
+    if (
+      bumper.previousElementSibling &&
+      bumper.previousElementSibling.tagName.toLowerCase() === 'div'
+    ) {
       const bumperTarget = bumper.previousElementSibling as HTMLDivElement;
       const bumperTargetStyle = getComputedStyle(bumperTarget);
       bumper.style.height = bumperTargetStyle.height;
@@ -157,8 +159,10 @@ const rebindSelectObjects = () => {
   const selects = document.querySelectorAll('select:not(.rebound)');
   for (let i = 0; i < selects.length; i++) {
     const select = selects[i];
-    if (select.getAttribute('options-bound') ||
-        select.getAttribute('actions-bound')) {
+    if (
+      select.getAttribute('options-bound') ||
+      select.getAttribute('actions-bound')
+    ) {
       select.removeAttribute('options-bound');
       select.removeAttribute('actions-bound');
     }
@@ -271,8 +275,10 @@ const bindOptions = (stringToBoolean = true) => {
         optionItem.addEventListener('change', (e: Event) => {
           if (e.target) {
             if (isCheckbox) {
-              stardust.options[boundOption] =
-                  (e.target as HTMLInputElement).checked ? true : false;
+              stardust.options[boundOption] = (e.target as HTMLInputElement)
+                .checked
+                ? true
+                : false;
             } else if (isSelect) {
               const target = e.target as HTMLSelectElement;
               if (target.value === 'true' && stringToBoolean) {
@@ -307,7 +313,7 @@ const bindOptions = (stringToBoolean = true) => {
 
     const value = stardust.options[boundOption];
     if (isSelect) {
-      const item = optionItem as HTMLSelectElement
+      const item = optionItem as HTMLSelectElement;
       item.value = value;
       item.setAttribute('options-bound', 'true');
     } else if (isCheckbox) {
@@ -409,7 +415,9 @@ const hideSideMenu = (e: Event) => {
  */
 const toggleSideMenu = (hide = false) => {
   const sideMenu = document.getElementById('side-menu-wrap') as HTMLDivElement;
-  const headerBack = document.getElementById('header-back-wrap') as HTMLDivElement;
+  const headerBack = document.getElementById(
+    'header-back-wrap'
+  ) as HTMLDivElement;
   const headerTitle = document.getElementById('header-title') as HTMLDivElement;
   if (sideMenu && headerBack && headerTitle) {
     const state = sideMenu.style.marginRight;
@@ -633,8 +641,11 @@ const hideModalByEvent = (e: Event) => {
   if (e.target) {
     const target = e.target as HTMLElement;
     const classList = target.classList;
-    if (classList && (classList.contains('modal-wrap') ||
-        classList.contains('modal-close-button'))) {
+    if (
+      classList &&
+      (classList.contains('modal-wrap') ||
+        classList.contains('modal-close-button'))
+    ) {
       const modals = document.getElementsByClassName('modal-wrap');
       for (let i = 0; i < modals.length; i++) {
         const modal = modals[i] as HTMLDivElement;
@@ -680,12 +691,9 @@ const initStardust = (initOptions: AppOptions) => {
         document.location.reload();
       },
     },
-    themes: [
-      'dark',
-      'light'
-    ],
+    themes: ['dark', 'light'],
     selectedTheme: 'light',
-    sideMenuIsVisible: false
+    sideMenuIsVisible: false,
   };
 
   // Merge Stardust built-in actions, themes, and options with any app-provided
@@ -707,8 +715,9 @@ const initStardust = (initOptions: AppOptions) => {
   applyStardustTheme(stardust.options.theme);
 
   // Initialize side menu.
-  const sideMenuButton =
-      document.getElementById('side-menu-button-wrap') as HTMLDivElement;
+  const sideMenuButton = document.getElementById(
+    'side-menu-button-wrap'
+  ) as HTMLDivElement;
   if (sideMenuButton) {
     sideMenuButton.addEventListener('click', () => {
       toggleSideMenu();
