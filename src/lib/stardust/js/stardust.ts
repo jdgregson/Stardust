@@ -393,7 +393,6 @@ const hideSideMenu = (e: Event) => {
     let target = e.target as HTMLElement;
     if (
       target.id !== 'side-menu-button-svg' &&
-      target.id !== 'side-menu-button-svg' &&
       target.tagName !== 'path' &&
       stardust.sideMenuIsVisible
     ) {
@@ -462,9 +461,9 @@ const sanitizeString = (string: string) => {
 };
 
 /**
- * The equivalent of Math.random() but utilizing the browser's built in
+ * The equivalent of Math.random() but utilizing the browser's built-in
  * cryptographic libraries.
- * @return {float} A cryptographically secure random floating point value
+ * @return {float} A cryptographically-secure random floating point number
  *     between 0 and 1.
  */
 const secureMathRandom = () => {
@@ -472,14 +471,14 @@ const secureMathRandom = () => {
 };
 
 /**
- * Returns a cryptographically secure random string of alphanumeric characters
+ * Returns a cryptographically-secure random string of alphanumeric characters
  * numberOfCharacters long. Special characters can be included by passing true
  * for useSpecialCharacters.
- * @param {number} numberOfCharacters The length of the string that should be
- *     returned.
- * @param {boolean} useSpecialCharacters Whether or not to include special
- *     characters such as # and ( in the returned string.
- * @return {string} A cryptographically secure random string of alphanumeric
+ * @param {number=} numberOfCharacters The length of the string that should be
+ *     returned. Default: 32
+ * @param {boolean=} useSpecialCharacters Whether or not to include special
+ *     characters such as # and ( in the returned string. Default: false
+ * @return {string} A cryptographically-secure random string of alphanumeric
  *     characters numberOfCharacters long.
  */
 const secureRandomString = (
@@ -492,9 +491,9 @@ const secureRandomString = (
     'abcdefghijklmnopqrstuvwxyz',
     'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   ].join('');
-  validChars += useSpecialCharacters
-    ? '`~!@#$%^&*()_+-=[]{}\\|;:\'",<.>/?'
-    : '';
+  if (useSpecialCharacters) {
+    validChars += '`~!@#$%^&*()_+-=[]{}\\|;:\'",<.>/?';
+  }
   while (result.length < numberOfCharacters) {
     result += validChars[Math.floor(secureMathRandom() * validChars.length)];
   }
@@ -562,7 +561,7 @@ const hideSplash = () => {
   if (splash) {
     splash.style.opacity = '0';
     self.setTimeout(() => {
-      document.body.removeChild(splash);
+      (splash.parentElement as HTMLElement).removeChild(splash);
     }, 200);
   }
 };

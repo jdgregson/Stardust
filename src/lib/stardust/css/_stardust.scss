@@ -63,6 +63,11 @@ a:active {
 
 /** structural wraps **/
 
+#outer-wrap {
+  width: 100vw;
+  height: 100vh;
+}
+
 #content-inner-wrap {
   padding: 10px;
   max-width: 1200px;
