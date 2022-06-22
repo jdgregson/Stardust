@@ -2,3 +2,5 @@ node_modules/
 build/
 *.sublime-workspace
 .dccache
+*.d.ts
+*.map
