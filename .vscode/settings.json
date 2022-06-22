@@ -1,8 +1,5 @@
 {
-	"files.exclude": {
-		"**/*.js": true,
-		"**/*.map": true
-	},
+	"files.exclude": {},
 	"cSpell.words": [
 		"appicon"
 	]
