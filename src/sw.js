@@ -1,6 +1,6 @@
 const appName = 'stardust';
 
-self.addEventListener('install', (e) => {
+self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(appName).then(cache =>
       cache.addAll([
@@ -26,8 +26,14 @@ self.addEventListener('install', (e) => {
   );
 });
 
-self.addEventListener('fetch', (e) => {
+self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(response => response || fetch(e.request))
+    (async () => {
+      try {
+        return await fetch(e.request);
+      } catch (err) {
+        return caches.match(e.request);
+      }
+    })()
   );
 });
