@@ -1,10 +1,9 @@
-const appName = 'stardust';
+const appName = 'Stardust';
 
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(appName).then(cache =>
       cache.addAll([
-        // Base Stardust app files
         'index.html',
         'js/app.js',
         'css/app-theme-dark.css',
@@ -19,6 +18,7 @@ self.addEventListener('install', e => {
         'art/appicon-192.png',
         'art/appicon-256.png',
         'art/appicon-512.png',
+
         // App-specific files
         'art/hello-diff.png',
       ])

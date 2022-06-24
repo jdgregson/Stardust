@@ -1,5 +1,6 @@
 {
   "name": "Stardust",
+  "description": "An app built with Stardust.",
   "devDependencies": {
     "sass": "^1.53.0",
     "gts": "^3.1.0",
@@ -23,6 +24,7 @@
     "copy-files": "cpx \"src/**/*.!(ts|scss)\" build",
     "watch-files": "cpx \"src/**/*.!(ts|scss)\" build --watch",
     "build": "npm run build-css && npm run build-ts && npm run copy-files",
-    "build-watch": "concurrently 'npm:watch-ts' 'npm:watch-css' 'npm:watch-files'"
+    "build-watch": "concurrently 'npm:watch-ts' 'npm:watch-css' 'npm:watch-files'",
+    "stardust-init": "node scripts/stardust-init.js"
   }
 }
