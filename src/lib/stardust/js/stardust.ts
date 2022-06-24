@@ -517,14 +517,12 @@ const applyStardustTheme = (themeName = stardust.options.theme) => {
     themeName = 'light';
   }
   stardust.selectedTheme = themeName;
-  const styles = document.querySelectorAll('.stardust-theme-style');
-  for (let i = 0; i < styles.length; i++) {
-    document.head.removeChild(styles[i]);
-  }
+
   const themeCssFiles = [
     `lib/stardust/css/stardust-theme-${themeName}.css`,
     `css/app-theme-${themeName}.css`,
   ];
+
   for (let i = 0; i < themeCssFiles.length; i++) {
     const style = document.createElement('link');
     style.setAttribute('rel', 'stylesheet');
@@ -532,6 +530,18 @@ const applyStardustTheme = (themeName = stardust.options.theme) => {
     style.setAttribute('href', themeCssFiles[i]);
     document.head.appendChild(style);
   }
+
+  self.setTimeout(() => {
+    let styles = document.querySelectorAll('.stardust-theme-style.applied');
+    for (let i = 0; i < styles.length; i++) {
+      document.head.removeChild(styles[i]);
+    }
+    styles = document.querySelectorAll('.stardust-theme-style');
+    for (let i = 0; i < styles.length; i++) {
+      styles[i].classList.add('applied');
+    }
+  }, 100);
+
   self.setTimeout(() => {
     if (localStorageAvailable()) {
       localStorage.setItem('stardust-primary-color', getThemePrimaryColor());
