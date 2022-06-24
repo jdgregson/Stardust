@@ -2,7 +2,7 @@
 Stardust is a lightweight web application framework. I made Stardust to serve as a bootstrap application for my future web apps. Stardust gives my apps a minimal build environment, some common UI elements, and a small library of JavaScript functions.
 
 ## Demo
-View the [Stardust Demo](https://jdgregson.github.io/stardust-demo/).
+View the [Stardust Demo](https://jdgregson.github.io/Stardust/).
 
 ## Highlights
 - Responsive design

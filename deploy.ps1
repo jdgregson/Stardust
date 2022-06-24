@@ -7,9 +7,10 @@ if ($gitStatus -match "Changes not staged for commit|Your branch is ahead") {
     exit
 }
 
+$head = git symbolic-ref --short HEAD
 git checkout --orphan gh-pages
 git --work-tree build add --all
 git --work-tree build commit -m 'Deploying to GitHub Pages'
 git push origin HEAD:gh-pages --force
-git checkout -f master
+git checkout -f $head
 git branch -D gh-pages
