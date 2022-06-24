@@ -186,7 +186,7 @@ const rebindSelectObjects = () => {
  * not set.
  * @return {object} The options object.
  */
-const getOptions = () => {
+const getOptions = (): object => {
   let options = {
     isFirstLoad: true,
     theme: 'light',
@@ -452,7 +452,7 @@ const toggleSideMenu = (hide = false) => {
  * @param {string} string An unsafe string.
  * @return {string} A safe string.
  */
-const sanitizeString = (string: string) => {
+const sanitizeString = (string: string): string => {
   return string
     .replace(/<br ?\/?>/g, '\n')
     .replace(/&/g, '&amp;')
@@ -468,7 +468,7 @@ const sanitizeString = (string: string) => {
  * @return {float} A cryptographically-secure random floating point number
  *     between 0 and 1.
  */
-const secureMathRandom = () => {
+const secureMathRandom = (): number => {
   return window.crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295;
 };
 
@@ -486,7 +486,7 @@ const secureMathRandom = () => {
 const secureRandomString = (
   numberOfCharacters = 32,
   useSpecialCharacters = false
-) => {
+): string => {
   let result = '';
   let validChars = [
     '0123456789',
@@ -554,7 +554,7 @@ const applyStardustTheme = (themeName = stardust.options.theme) => {
  * @return {string} Hex, RGB, or other color value representing the primary app
  *     color for the active theme.
  */
-const getThemePrimaryColor = () => {
+const getThemePrimaryColor = (): string => {
   const element = document.createElement('div');
   element.classList.add('stardust-primary-color');
   document.body.appendChild(element);
