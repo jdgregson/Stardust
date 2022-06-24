@@ -191,7 +191,7 @@ const getOptions = () => {
     isFirstLoad: true,
     theme: 'light',
   } as StardustOptions;
-  if (typeof localStorage !== 'undefined') {
+  if (localStorageAvailable()) {
     let savedOptions = localStorage.getItem('options');
     if (savedOptions) {
       options = <StardustOptions>JSON.parse(savedOptions);
@@ -211,7 +211,7 @@ const getOptions = () => {
  * Saves the options object to local storage.
  */
 const saveOptions = () => {
-  if (typeof localStorage !== 'undefined') {
+  if (localStorageAvailable()) {
     localStorage.setItem('options', JSON.stringify(stardust.options));
   }
 };
@@ -223,7 +223,9 @@ const saveOptions = () => {
  *     the options object.
  */
 const resetOptions = (reload = true) => {
-  localStorage.removeItem('options');
+  if (localStorageAvailable()) {
+    localStorage.removeItem('options');
+  }
   stardust.options = getOptions();
   if (reload) {
     document.location.reload();
@@ -531,7 +533,7 @@ const applyStardustTheme = (themeName = stardust.options.theme) => {
     document.head.appendChild(style);
   }
   self.setTimeout(() => {
-    if (typeof localStorage !== 'undefined') {
+    if (localStorageAvailable()) {
       localStorage.setItem('stardust-primary-color', getThemePrimaryColor());
     }
   }, 100);
@@ -669,6 +671,23 @@ const getUrlParameter = (name: string) => {
   return results === null
     ? ''
     : decodeURIComponent(results[1].replace(/\+/g, ' '));
+};
+
+/**
+ * Detects if localStorage access is available.
+ * @return boolean Whether localStorage is available.
+ */
+const localStorageAvailable = (): boolean => {
+  let storage: Storage;
+  try {
+    storage = window.localStorage;
+    const x = '__storage_test__';
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return false;
+  }
 };
 
 /** init **/

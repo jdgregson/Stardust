@@ -28,25 +28,24 @@
   <body>
     <div id="outer-wrap" onclick="void(0)">
       <div id="splash-wrap">
-        <div id="splash-inner" style="display: none;">
+        <div id="splash-inner" style="display: none">
           <div id="splash-title">Stardust</div>
           <div id="splash-text">loading 🤞</div>
         </div>
       </div>
       <script>
-        if (typeof localStorage !== 'undefined') {
+        try {
           var sdPrimaryColor = localStorage.getItem('stardust-primary-color');
           if (sdPrimaryColor) {
-            document.getElementById(
-              'splash-wrap'
-            ).style.backgroundColor = sdPrimaryColor;
+            document.getElementById('splash-wrap').style.backgroundColor =
+              sdPrimaryColor;
           }
-        }
+        } catch (e) {}
       </script>
 
       <div id="header">
         <div id="header-inner">
-          <div id="header-back-wrap" style="right: 100%;">
+          <div id="header-back-wrap" style="right: 100%">
             <svg id="header-back-svg">
               <g transform="matrix(0.5,-0.5,0.5,0.5,10,19)">
                 <path d="M27,2L2,2L2,27"></path>
