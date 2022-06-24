@@ -3,20 +3,12 @@
   "description": "An app built with Stardust.",
   "devDependencies": {
     "sass": "^1.53.0",
-    "gts": "^3.1.0",
     "typescript": "^4.7.4",
     "@types/node": "^18.0.0",
     "concurrently": "^7.2.2",
     "cpx": "^1.5.0"
   },
   "scripts": {
-    "check": "gts check",
-    "clean": "gts clean",
-    "compile": "tsc",
-    "fix": "gts fix",
-    "prepare": "npm run compile",
-    "pretest": "npm run compile",
-    "posttest": "npm run check",
     "build-css": "sass ./src/css ./src/lib/stardust/css",
     "watch-css": "sass ./src/css ./src/lib/stardust/css --watch",
     "build-ts": "tsc",
