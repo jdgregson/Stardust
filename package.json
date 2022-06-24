@@ -25,6 +25,7 @@
     "watch-files": "cpx \"src/**/*.!(ts|scss)\" build --watch",
     "build": "npm run build-css && npm run build-ts && npm run copy-files",
     "build-watch": "concurrently 'npm:watch-ts' 'npm:watch-css' 'npm:watch-files'",
-    "stardust-init": "node scripts/stardust-init.js"
+    "stardust-init": "node scripts/stardust-init.js",
+    "stardust-deploy": "powershell -file scripts/deploy.ps1"
   }
 }
