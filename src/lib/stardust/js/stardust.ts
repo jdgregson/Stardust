@@ -777,7 +777,7 @@ const initStardust = (initOptions: AppOptions) => {
   rebindSelectObjects();
   self.setTimeout(() => {
     hideSplash();
-  }, 1);
+  }, 200);
 };
 
 let stardust: Stardust;
