@@ -5,3 +5,4 @@ build/
 *.d.ts
 *.map
 *.css
+*.js.map
