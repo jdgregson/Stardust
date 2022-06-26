@@ -28,7 +28,7 @@
   <body>
     <div id="outer-wrap" onclick="void(0)">
       <div id="splash-wrap">
-        <div id="splash-inner" style="display: none">
+        <div id="splash-inner" style="display: none;">
           <div id="splash-title">Stardust</div>
           <div id="splash-text">loading 🤞</div>
         </div>
@@ -74,21 +74,7 @@
       <div id="loading-bar"></div>
 
       <div id="content-outer-wrap">
-        <div id="content-inner-wrap">
-          <!-- CONTENT START -->
-
-          <div class="card card-1">
-            <div class="card-title">Hello world!</div>
-            <div>Welcome to the Stardust demo.</div>
-            <br />
-            <div>
-              Hello text color:
-              <span id="hello-color"></span>
-            </div>
-          </div>
-
-          <!-- CONTENT END -->
-        </div>
+        <div id="content-inner-wrap"></div>
       </div>
 
       <div id="side-menu-wrap">
@@ -121,7 +107,7 @@
           <div
             class="side-menu-row"
             id="toast-button"
-            bind-action="click:showToast"
+            bind-action="click:showDemoToast"
           >
             <span class="side-menu-text">Show a toast</span>
           </div>

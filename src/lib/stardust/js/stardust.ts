@@ -6,6 +6,15 @@
 
 /** interfaces **/
 
+interface StardustRoute {
+  url: string;
+}
+
+interface StardustRouteCollection {
+  default: StardustRoute;
+  [key: string]: StardustRoute;
+}
+
 interface StardustOptions {
   isFirstLoad: boolean;
   theme: string;
@@ -17,7 +26,8 @@ interface AppOptions {
 }
 
 interface Stardust {
-  options?: any;
+  routes: StardustRouteCollection;
+  options: StardustOptions;
   appDefaultOptions?: any;
   actions: any;
   themes: Array<string>;
@@ -186,7 +196,7 @@ const rebindSelectObjects = () => {
  * not set.
  * @return {object} The options object.
  */
-const getOptions = (): object => {
+const getOptions = (): StardustOptions => {
   let options = {
     isFirstLoad: true,
     theme: 'light',
@@ -263,6 +273,9 @@ const resetOptions = (reload = true) => {
  *     and 'false' to boolean values when changed. Default is true.
  */
 const bindOptions = (stringToBoolean = true) => {
+  if (typeof stardust === 'undefined') {
+    throw 'stardust is not defined';
+  }
   const optionItems = document.querySelectorAll('[bind-option]');
   for (let i = 0; i < optionItems.length; i++) {
     const optionItem = optionItems[i] as HTMLElement;
@@ -275,6 +288,9 @@ const bindOptions = (stringToBoolean = true) => {
     if (!optionItem.getAttribute('options-bound')) {
       if (optionItemTag !== 'div' && optionItemTag !== 'span') {
         optionItem.addEventListener('change', (e: Event) => {
+          if (typeof stardust === 'undefined') {
+            throw 'stardust is not defined';
+          }
           if (e.target) {
             if (isCheckbox) {
               stardust.options[boundOption] = (e.target as HTMLInputElement)
@@ -512,8 +528,8 @@ const secureRandomString = (
  *     options.theme. If provided or defaulted theme is not valid, 'light' will
  *     be used instead.
  */
-const applyStardustTheme = (themeName = stardust.options.theme) => {
-  if (stardust.themes.indexOf(themeName) < 0) {
+const applyStardustTheme = (themeName = stardust?.options?.theme) => {
+  if (!themeName || stardust.themes.indexOf(themeName) < 0) {
     themeName = 'light';
   }
   stardust.selectedTheme = themeName;
@@ -700,14 +716,105 @@ const localStorageAvailable = (): boolean => {
   }
 };
 
+const headerTitleClick = (e: Event) => {
+  console.log('click');
+  debugger;
+  e.preventDefault();
+  if (stardust && !stardust.sideMenuIsVisible) {
+    loadRoute('default');
+  }
+  return false;
+};
+
+/** routes **/
+
+const getRequestedRoute = (): string => {
+  const url = new URL(document.location.href);
+  return url.searchParams.get('page') || '';
+};
+
+/**
+ * Loads a route by fetching the page content using fetch() and inserting it as
+ * HTML into the DOM. If the route is not defined, the 'missing' route will be
+ * loaded. If the 'missing' route is not defined, the 'default' route will be
+ * loaded.
+ * @param {string} routeName The name of the route to load.
+ * @param {HTMLElement=} domNode The DOM Note into which the fetched HTML
+ *    content should be inserted. If not provided, an element with the ID
+ *    'content-inner-wrap' will be used.
+ */
+const loadRoute = (routeName?: string, domNode?: HTMLElement | null) => {
+  if (typeof stardust === 'undefined') {
+    throw 'stardust is not defined';
+  }
+
+  if (typeof routeName === 'undefined' || routeName === '') {
+    routeName = 'default';
+  } else {
+    const routeNames = Object.keys(stardust.routes);
+    if (routeNames.indexOf(routeName) < 0) {
+      if (routeNames.indexOf('missing') > -1) {
+        routeName = 'missing';
+      } else {
+        routeName = 'default';
+      }
+    }
+  }
+
+  const defaultDomNode = 'content-inner-wrap';
+  if (typeof domNode === 'undefined') {
+    domNode = document.getElementById(defaultDomNode);
+  }
+  if (!domNode) {
+    throw `could not find provided domNode or #${defaultDomNode}`;
+  }
+
+  const route = stardust.routes[routeName];
+  fetch(route.url).then((response) => {
+    if (response.status === 200) {
+      response.text().then((text) => {
+        if (domNode) {
+          domNode.innerHTML = text;
+        }
+      });
+    } else {
+      const status = sanitizeString(response.status + '');
+      const text = `
+        <div class="card card-1">
+          <div class="card-title">Error: ${status}</div>
+          <div>The requested page exists, but there was an error when fetching it from the origin server.</div>
+          <br>
+          <div>Route URL: ${sanitizeString(route.url)}</div>
+        </div>
+      `;
+      if (domNode) {
+        domNode.innerHTML = text;
+      }
+    }
+  });
+};
+
 /** init **/
 
 /**
  * Bootstraps the Stardust application.
  */
 const initStardust = (initOptions: AppOptions) => {
+  // Register a service worker to enable app installation as a PWA.
+  if (
+    typeof initOptions.enableServiceWorker === 'undefined' ||
+    initOptions.enableServiceWorker
+  ) {
+    navigator.serviceWorker.register('sw.js');
+  }
+
   stardust = {
-    options: {},
+    routes: {
+      default: {
+        url: 'pages/default.html',
+      },
+    },
+    options: {} as StardustOptions,
     actions: {
       reset: () => {
         resetOptions();
@@ -724,9 +831,12 @@ const initStardust = (initOptions: AppOptions) => {
     sideMenuIsVisible: false,
   };
 
-  // Merge Stardust built-in actions, themes, and options with any app-provided
-  // ones.
+  // Merge Stardust built-in routes, actions, themes, and options with any
+  // app-provided ones.
   if (initOptions) {
+    if (initOptions.routes) {
+      stardust.routes = {...stardust.routes, ...initOptions.routes};
+    }
     if (initOptions.actions) {
       stardust.actions = {...stardust.actions, ...initOptions.actions};
     }
@@ -761,15 +871,18 @@ const initStardust = (initOptions: AppOptions) => {
   // TODO: Look into doing this with a ResizeObserver, but there is no IE 11
   // support. Maybe a MutationObserver instead?
   updateBumpers();
-  const bumperPageloadTimer = self.setInterval(() => {
+  const bumperPageLoadTimer = self.setInterval(() => {
     updateBumpers();
   }, 100);
   self.setTimeout(() => {
-    self.clearInterval(bumperPageloadTimer);
+    self.clearInterval(bumperPageLoadTimer);
   }, 2000);
   window.addEventListener('resize', () => {
     updateBumpers();
   });
+
+  // Load requested route.
+  loadRoute(getRequestedRoute());
 
   bindOptions();
   bindActions();
