@@ -1,0 +1,14 @@
+/* Define app variables here */
+/* Re-define Startdust variables here */
+body {
+  background-color: #efefef;
+}
+
+#hello-color {
+  background-color: #cccccc;
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+}
+
+/*# sourceMappingURL=app-theme-light.css.map */
